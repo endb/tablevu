@@ -1,5 +1,5 @@
 {
-	"name": "tablevue",
+	"name": "@enbz/tablevue",
 	"version": "1.0.0",
 	"description": "vue 3 data table",
 	"main": "index.js",
