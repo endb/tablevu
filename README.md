@@ -1,9 +1,9 @@
-# tablevue
+# tablevu
 Simple javasript table for vuejs 3.x (Doesn't work with vuejs 2.x)
 
 ## Install
 ```shell
-npm install tablevue
+npm install tablevu
 ```
 
 ## Documentation
