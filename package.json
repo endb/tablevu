@@ -1,12 +1,26 @@
 {
-  "name": "tablevue",
-  "version": "0.1.0",
-  "description": "Vue 3 Data Table",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": ["grid", "data", "table", "datatable", "vue", "vue3", "vue 3", "vuejs", "vuejs3", "vuejs 3" "odata"],
-  "author": "endb <ender.boz@gmail.com>",
-  "license": "MIT"
+	"name": "tablevue",
+	"version": "0.1.0",
+	"description": "vue 3 data table",
+	"main": "index.js",
+	"directories": {
+		"dist": "dist"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/endb/tablevue.git"
+	},
+	"keywords": [
+		"table",
+		"datatable"
+	],
+	"author": "endb <ender.boz@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/endb/tablevue/issues"
+	},
+	"homepage": "https://github.com/endb/tablevue#readme"
 }
