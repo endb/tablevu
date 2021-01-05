@@ -11,7 +11,7 @@ npm install tablevu
 Preparing ..
 
 
-## Dependence
+## Dependencies
 
 - [Vuejs](https://github.com/vuejs/vue) 3.0+
 
