@@ -14,7 +14,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/endb/tablevue.git"
+		"url": "git+https://github.com/endb/tablevu.git"
 	},
 	"keywords": [
 		"table",
@@ -23,7 +23,7 @@
 	"author": "endb <ender.boz@gmail.com>",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/endb/tablevue/issues"
+		"url": "https://github.com/endb/tablevu/issues"
 	},
-	"homepage": "https://github.com/endb/tablevue#readme"
+	"homepage": "https://github.com/endb/tablevu#readme"
 }
