@@ -1,6 +1,6 @@
 {
 	"name": "tablevu",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"description": "vue 3 data table",
 	"main": "index.js",
 	"directories": {
@@ -10,7 +10,6 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"vue": ">=3.0.0"
 	},
 	"repository": {
 		"type": "git",
@@ -18,12 +17,19 @@
 	},
 	"keywords": [
 		"table",
-		"datatable"
+		"datatable",
+		"vue3 table",
+		"vue3 datatable",
+		"vue 3 table",
+		"vue 3 datatable",
 	],
 	"author": "endb <ender.boz@gmail.com>",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/endb/tablevu/issues"
 	},
-	"homepage": "https://github.com/endb/tablevu#readme"
+	"homepage": "https://github.com/endb/tablevu#readme",
+	"devDependencies": {
+		"vue": ">=3.0.0"
+	}
 }
