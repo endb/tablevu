@@ -1,5 +1,6 @@
-# tablevu
+# tablevu (alpha version)
 Simple javasript table for vuejs 3.x (Doesn't work with vuejs 2.x)
+No Dependencies
 
 ## Install
 ```shell
@@ -11,7 +12,7 @@ npm install tablevu
 Preparing ..
 
 
-## Dependencies
+## Dev. Dependencies
 
 - [Vuejs](https://github.com/vuejs/vue) 3.0+
 
