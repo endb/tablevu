@@ -1,4 +1,14 @@
-export default function param(uri, header, props) { // C# : methodXYZ(string search, int top, int skip, string orderBy, string orderdir)
+/*
+	props: {
+		pageSize
+		currentPage
+		search
+		order
+	}
+
+	C# : methodXYZ(string search, int top, int skip, string orderBy, string orderdir)
+*/
+export default function webapi(uri, header, props) {
 	const url = new URL(uri);
 	//
 	// Paging //
