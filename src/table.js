@@ -1,5 +1,5 @@
 /*
- *  tablevue
+ *  tablevu
  *  A small, fast, easy-to-use table component.
  *  Copyright (c) 2020 Ender Boz <ender.boz@gmail.com>
  *  https://github.com/endb/tablevu/LICENCE
@@ -105,18 +105,19 @@ const tablevu = {
 			//const tm = Date.now();
 
 			spec.status = tablevuStatuses.Loading;
-			spec.currPage = currentPage;
+			//spec.currPage = currentPage;
 
 			if (Array.isArray(props.data)) {
 				rows = props.data;
 
 				spec.pageCount = (rows.length > 0 && spec.pageSize > 0) ? (rows.length / spec.pageSize) : 0;
 				spec.status = tablevuStatuses.Ready;
+				spec.currPage = currentPage;
 				spec.time = Date.now();
 			}
 			
 			if (props.data.adapter) {
-				const r = props.data.adapter(spec);
+				const r = props.data.adapter({ pageSize: spec.pageSize, pageCount: spec.pageCount, currPage: currentPage, sort: spec.sort, cols: spec.cols, search: spec.search });
 
 				fetch(r).then(res => res.json()).then(res => {
 					let cnt = 0;
@@ -129,6 +130,7 @@ const tablevu = {
 						
 						spec.pageCount = (cnt > 0 && spec.pageSize > 0) ? (cnt / spec.pageSize) : 0;
 						spec.status = tablevuStatuses.Ready;
+						spec.currPage = currentPage;
 						spec.time = Date.now();
 					}
 				}).catch(err => {
@@ -228,12 +230,12 @@ const tablevu = {
 
 			if (props.data.onRowDblClick) {
 				o.ondblclick = (event) => {
-					const r = rows[event.currentTarget.rowIndex];
+					const r = rows[event.currentTarget.rowIndex-1];
 					props.data.onRowDblClick(event, r); 
 				};
 			} else if (props.onRowDblClick) {
 				o.ondblclick = (event) => {
-					const r = rows[event.currentTarget.rowIndex];
+					const r = rows[event.currentTarget.rowIndex-1];
 					props.onRowDblClick(event, r); 
 				};
 			}
@@ -241,7 +243,7 @@ const tablevu = {
 
 			if (props.onRowClick) {
 				o.onClick = (event) => {
-					const r = rows[event.currentTarget.rowIndex];
+					const r = rows[event.currentTarget.rowIndex-1];
 					props.onRowClick(event, r);
 				};
 			}
@@ -261,32 +263,14 @@ const tablevu = {
 					s.push(h('span', spec.cols[i].name));
 				}
 
-/*				if (spec.cols[i].sort) {
-					if (spec.cols[i].sort == 'asc')
-						s.push(h('span', { style: { float: 'right' } }, '⯅'))
-					else
+				if (spec.sort && spec.sort.length > 0 && spec.sort[0].index == i) {
+					if (spec.sort[0].dir == 'desc')
 						s.push(h('span', { style: { float: 'right' } }, '⯆'))
-				}*/
-
-				/*const f = spec.order.find((q) => q.index === i);
-				let c = '';
-
-				if (f) {
-					c = f.type === 'desc' ? '\u2bc6' : '\u2bc5';
-				} else {
-					c = '';//\u22C4
+					else
+						s.push(h('span', { style: { float: 'right' } }, '⯅'))
 				}
 
-				s.push(h('span', { style: { float: 'right' } }, c));*/
-
-				// if (this.data.columns[i].sortable && this.data.columns[i].sortable == false) {
-
-				// ce('span', { style: { } }, '\u2bc5'),
-				// ce('span', { style: { } }, '\u2bc6'),
-				// }
-
-				// h.on = { onclick: this.orderby };
-				const a = h('a', { href: '#', onClick(event) { console.log(event); orderby(i); event.preventDefault(); }, style: { display: 'block', 'font-weight': 500, 'text-decoration': 'none', color: 'black' } }, s);
+				const a = h('a', { href: '#', onClick(event) { orderby(i); event.preventDefault(); }, style: { display: 'block', 'font-weight': 500, 'text-decoration': 'none', color: 'black' } }, s);
 
 				th.push(h('th', { style: { width: spec.cols[i].width ? spec.cols[i].width : 'auto', 'max-width': spec.cols[i].width ? spec.cols[i].width : 'auto' } }, [a]));
 			}
