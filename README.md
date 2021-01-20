@@ -20,7 +20,7 @@ npm install tablevu
 ```
 
 
-## Documentation (Preparing..)
+## Usage
 * **data**		: Array or Server side parameters
 
 * **search**		: Reactive filter value
@@ -53,10 +53,10 @@ npm install tablevu
   * **render**  	: Render value
 
 
-## Samples (Preparing..)
+## Samples
 
-* odata sample (Preparing..)
-* search sample (Preparing..)
+* odata sample (Coming soon..)
+* search sample (Coming soon..)
 
 
 **odata sample**
