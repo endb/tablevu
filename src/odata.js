@@ -1,3 +1,16 @@
+/*
+	Props: {
+		url: '',
+
+		pageSize
+		currPage
+		select
+		expand
+		filter
+		search
+
+	}
+*/
 function filter(q) {
 
 	function fuval(q) {
@@ -35,7 +48,7 @@ function filter(q) {
 	return s;
 }
 
-export default function odata(options, props) {
+function odata(options, props) {
 	const url = new URL(options.url);
 
 	// Paging //
@@ -55,7 +68,7 @@ export default function odata(options, props) {
 	// Filter //
 	let f = [];
 
-	if (options.filter && options.filter.hasOwnProperty('filters')) {
+	if (options.filter && Object.prototype.hasOwnProperty.call(options, 'filters')) {
 		let l = filter(options.filter);
 		f.push(l);
 	}
@@ -73,7 +86,9 @@ export default function odata(options, props) {
 
 	// Sort //
 	if (props.sort && props.sort.length > 0)
-		url.searchParams.append('$orderby', props.sort.filter(f => f.index || f.name).map(m => { return (m.index ? props.cols[m.index].name : m.name) + (m.dir ? (' ' + m.dir): '') }).join(','));
-	
+		url.searchParams.append('$orderby', props.sort.map(m => { let n = { index: -1, name: '', dir: null }; if (Object.prototype.hasOwnProperty.call(m, 'index')) { n.index = m.index } else { n.name = m.name }; n.dir = m.dir; return n; }).map(m => { return (m.index > -1 ? props.cols[m.index].name : m.name) + (m.dir ? (' ' + m.dir): '') }).join(','));
+
 	return new Request(url, options.header);
 }
+
+export default odata;
