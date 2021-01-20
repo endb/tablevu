@@ -1,3 +1,5 @@
-import tablevue from `src/table.js`
+import tablevu from './dist/table'
+import odata from './dist/odata'
+import webapi from './dist/webapi'
 
-export default tablevue;
+export { tablevu, odata, webapi };
