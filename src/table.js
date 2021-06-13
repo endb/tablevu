@@ -13,6 +13,7 @@ const tablevu = {
 	props: {
 		data: { type: [Array, Object] },
 		search: { type: String },
+		filter: { type: [Array, Object] },
 		rowid: { type: String },
 		onRowClick: { type: Function },
 		onRowDblClick: { type: Function },
@@ -32,19 +33,28 @@ const tablevu = {
 			timer: null,
 			time: null,
 			cols: [],
+			filter: null,
 			search: null
 		});
 
 		// Setup Search Input //
-		watch(() => props.search, (c) => {
+		watch(() => props.search, (n,o) => {
 			if (spec.timer)
 				clearTimeout(spec.timer);
 
-			if (c && c.length > (props.data.searchMinChar || 3)) {
-				spec.timer = setTimeout(() => { spec.search = props.search; refresh(); }, 444);
+			if ((o && o.length > (props.data.searchMinChar || 3) && (n == undefined || n == null || n.length <= (props.data.searchMinChar || 3))) || (n && n.length > (props.data.searchMinChar || 3))) {
+				spec.timer = setTimeout(() => { if (props.search && props.search.length > (props.data.searchMinChar || 3)) spec.search = props.search; else spec.search = null; refresh(); }, 444);
 			}
 		});
 
+		watch(() => props.filter, () => {
+			if (props.filter)
+				spec.filter = props.filter;
+			else
+				spec.filter = null;
+
+			refresh();
+		}, { deep: true });
 		/*****************************************************************
 
 		*****************************************************************/
@@ -117,7 +127,7 @@ const tablevu = {
 			}
 			
 			if (props.data.adapter) {
-				const r = props.data.adapter({ pageSize: spec.pageSize, pageCount: spec.pageCount, currPage: currentPage, sort: spec.sort, cols: spec.cols, search: spec.search });
+				const r = props.data.adapter({ pageSize: spec.pageSize, pageCount: spec.pageCount, currPage: currentPage, sort: spec.sort, cols: spec.cols, filter: spec.filter, search: spec.search });
 
 				fetch(r).then(res => res.json()).then(res => {
 					let cnt = 0;
