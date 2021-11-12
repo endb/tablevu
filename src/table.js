@@ -14,6 +14,7 @@ const tablevu = {
 		data: { type: [Array, Object] },
 		search: { type: String },
 		filter: { type: [Array, Object] },
+		command: { type: Array, default: [] },
 		rowid: { type: String },
 		onRowClick: { type: Function },
 		onRowDblClick: { type: Function },
@@ -47,6 +48,7 @@ const tablevu = {
 			}
 		});
 
+		// Setup dynamic filter //
 		watch(() => props.filter, () => {
 			if (props.filter)
 				spec.filter = props.filter;
@@ -54,6 +56,24 @@ const tablevu = {
 				spec.filter = null;
 
 			refresh();
+		}, { deep: true });
+
+		// Setup commands //
+		watch(() => props.command, (n,o) => {
+			if (n && n.length > 0) {
+				const c = props.command[n.length-1];
+
+				if (c && c.name) {
+					if (c.name.toLowerCase() == 'refresh') refresh()
+					else if (c.name.toLowerCase() == 'first') first()
+					else if (c.name.toLowerCase() == 'prior') prior()
+					else if (c.name.toLowerCase() == 'next') next()
+					else if (c.name.toLowerCase() == 'last') last()
+					else console.log('Unknown command');
+				}
+
+				props.command.length = 0;
+			}
 		}, { deep: true });
 		/*****************************************************************
 
@@ -228,7 +248,8 @@ const tablevu = {
 					if (c.depth) {
 						v = row;
 						for (let j = 0; j < c.depth.length; j += 1) {
-							v = v[c.depth[j]];
+							if (v)
+								v = v[c.depth[j]];
 						}
 					} else {
 						v = row[c.name];
@@ -249,7 +270,6 @@ const tablevu = {
 					props.onRowDblClick(event, r); 
 				};
 			}
-
 
 			if (props.onRowClick) {
 				o.onClick = (event) => {
