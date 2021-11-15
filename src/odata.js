@@ -14,13 +14,20 @@
 function filter(q) {
 
 	function fuval(q) {
-		if (typeof(q) === 'string') {
+		if (q === null) {
+			return 'null'
+		} else if (typeof(q) === 'string') {
 			return '\'' + q + '\'';
 		} else {
 			if (typeof(q) === 'number')
 				return q;
-			else
-				return q.func + '(' + q.params.join(',') + ')';
+			else {
+				debugger;
+				if (q.getMonth && typeof q.getMonth === "function")
+					return q.toISOString()
+				else
+					return q.func + '(' + q.params.join(',') + ')';
+			}
 		}
 	}
 
@@ -68,14 +75,19 @@ function odata(options, props) {
 	// Filter //
 	let f = [];
 
-	if (options.filter && Object.prototype.hasOwnProperty.call(options, 'filters')) {
+	if (options.filter && Object.prototype.hasOwnProperty.call(options.filter, 'filters')) {
 		let l = filter(options.filter);
+		f.push(l);
+	}
+
+	if (props.filter) {
+		let l = filter(props.filter);
 		f.push(l);
 	}
 
 	// Search //
 	if (props.search) {
-		let l = props.cols.filter(q => q.searchable == undefined || q.searchable == true).map(q => "contains(" + q.name + ",'" + props.search + "')").join(" or ");
+		let l = props.cols.filter(q => q.searchable == undefined || q.searchable == true).map(q => "contains(" + q.name.replaceAll('.', '/') + ",'" + props.search + "')").join(" or ");
 
 		if (l)
 			f.push('(' + l + ')');
